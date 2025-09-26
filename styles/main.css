@@ -1,0 +1,226 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #64748b;
+  --accent-color: #7c3aed;
+  --neutral-color: #f8fafc;
+  --primary-light: #eff6ff;
+  --accent-light: #f5f3ff;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+}
+
+/* 基础样式增强 */
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-800 min-h-screen;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-gray-900 tracking-tight;
+  }
+  
+  a {
+    @apply text-primary-color hover:text-primary-color/80 transition-colors;
+  }
+  
+  /* 滚动条美化 */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors;
+  }
+}
+
+/* 工具类扩展 */
+@layer utilities {
+  .content-auto {
+    content-visibility: auto;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-color text-white px-4 py-2.5 rounded-lg hover:bg-primary-color/90 
+           active:bg-primary-color/95 transition-all shadow-sm hover:shadow 
+           focus:outline-none focus:ring-2 focus:ring-primary-color/50 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-white border border-gray-300 text-gray-800 px-4 py-2.5 rounded-lg 
+           hover:bg-gray-50 active:bg-gray-100 transition-all shadow-sm
+           focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2;
+  }
+  
+  .btn-accent {
+    @apply bg-accent-color text-white px-4 py-2.5 rounded-lg hover:bg-accent-color/90
+           active:bg-accent-color/95 transition-all shadow-sm hover:shadow
+           focus:outline-none focus:ring-2 focus:ring-accent-color/50 focus:ring-offset-2;
+  }
+  
+  .input-field {
+    @apply w-full p-3 border border-gray-300 rounded-lg bg-white 
+           focus:outline-none focus:ring-2 focus:ring-primary-color/50 
+           focus:border-primary-color transition-all 
+           placeholder:text-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed;
+  }
+  
+  /* 新增美化工具类 */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-color to-accent-color;
+  }
+  
+  .bg-blur {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  .card-shadow {
+    box-shadow: var(--shadow-md);
+  }
+  
+  .section-padding {
+    @apply py-8 md:py-12;
+  }
+  
+  .section-title {
+    @apply text-2xl md:text-3xl font-bold mb-6 text-gray-900;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary {
+    @apply bg-primary-light text-primary-color;
+  }
+  
+  .badge-accent {
+    @apply bg-accent-light text-accent-color;
+  }
+}
+
+/* 动画效果增强 */
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-scale {
+  transition: transform 0.2s ease-in-out;
+}
+
+.animate-scale:hover {
+  transform: scale(1.02);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseSoft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* 组件样式增强 */
+.card {
+  @apply bg-white rounded-lg overflow-hidden card-shadow transition-all duration-300 
+         hover:shadow-lg;
+}
+
+.navbar {
+  @apply bg-white/90 bg-blur border-b border-gray-200 sticky top-0 z-50;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Markdown 样式增强 */
+.markdown-body {
+  @apply prose prose-blue prose-lg max-w-none 
+         prose-headings:font-bold 
+         prose-links:underline prose-links:underline-offset-4 
+         prose-links:hover:text-accent-color 
+         prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 
+         prose-code:rounded prose-code:text-gray-800
+         transition-colors;
+}
+
+/* 表单元素增强 */
+.form-group {
+  @apply mb-4;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1.5;
+}
+
+/* 加载状态样式 */
+.loader {
+  @apply w-5 h-5 border-2 border-gray-200 border-t-primary-color rounded-full animate-spin;
+}
+
+/* 骨架屏样式 */
+.skeleton {
+  @apply bg-gray-200 animate-pulse rounded-md;
+}
+
+/* 确保动画延迟生效的类 */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
