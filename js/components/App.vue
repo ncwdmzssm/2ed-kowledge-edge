@@ -21,21 +21,13 @@
           @edit="handleIndustryEdit"
           @add="handleIndustryAdd"
         />
-        <!-- 在template中更新组件引用 -->
+        
         <component 
-          v-if="activeTab === 'company'"
+          v-else
           :is="currentView"
           :items="filteredItems"
-          @view="handleCompanyView"
+          @edit="openDetailModal"
           @add="openAddModal"
-        />
-
-        <CompanyView 
-          v-if="activeTab === 'company-detail'"
-          :company="currentCompany"
-          @back="goToCompanyList"
-        />
-          
         />
       </PageTransition>
     </main>
@@ -80,7 +72,7 @@ import { useAppCore } from '../composables/useAppCore'
 import { useTabs } from '../composables/useTabs'
 import { useFiltering } from '../composables/useFiltering'
 import { useIndustry } from '../composables/useIndustry'
-import { ref } from 'vue';
+
 import Header from './Header.vue'
 import Footer from './Footer.vue'
 import SearchBar from './SearchBar.vue'
@@ -92,9 +84,6 @@ import IndustryView from './views/IndustryView.vue'
 import CompanyView from './views/CompanyView.vue'
 import SoftwareView from './views/SoftwareView.vue'
 import KnowledgeView from './views/KnowledgeView.vue'
-import PageTransition from './PageTransition.vue'; 
-
-
 
 // 核心状态管理
 const {
@@ -112,21 +101,7 @@ const {
 } = useAppCore()
 
 // 标签页和视图管理
-const { 
-  activeTab, 
-  currentView, 
-  handleTabChange: originalHandleTabChange ,
-  goToCompanyDetail,
-  goToCompanyList
-} = useTabs('industry')
-
-const currentCompany = ref(null)
-
-const handleCompanyView = (company) => {
-  currentCompany.value = company;
-  goToCompanyDetail();
-}
-
+const { activeTab, currentView, handleTabChange: originalHandleTabChange } = useTabs('industry')
 
 // 搜索和过滤
 const {
@@ -154,7 +129,6 @@ const handleTabChange = (tab) => {
   originalHandleTabChange(tab)
   resetFilters()
 }
-
 
 // 保存项目 (通用)
 const saveItem = (updatedItem) => {
