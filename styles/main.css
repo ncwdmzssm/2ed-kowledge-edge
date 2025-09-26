@@ -27,7 +27,7 @@
     @apply bg-gray-50 text-gray-800 min-h-screen;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold text-gray-900 tracking-tight;
   }
@@ -176,8 +176,7 @@
 
 /* 组件样式增强 */
 .card {
-  @apply bg-white rounded-lg overflow-hidden card-shadow transition-all duration-300 
-         hover:shadow-lg;
+  @apply bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100;
 }
 
 .navbar {
@@ -234,10 +233,6 @@
 }
 
 /* 卡片组件增强 */
-.card {
-  @apply bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100;
-}
-
 .card-header {
   @apply px-6 py-4 border-b border-gray-100 bg-gray-50;
 }
@@ -295,10 +290,6 @@
 }
 
 /* 骨架屏增强 */
-.skeleton-loading {
-  @apply bg-gray-200 animate-pulse rounded-md;
-}
-
 .skeleton-text {
   @apply h-4 bg-gray-200 rounded mb-2 animate-pulse;
 }
