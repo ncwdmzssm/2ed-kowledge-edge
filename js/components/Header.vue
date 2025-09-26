@@ -98,7 +98,7 @@ const tabs = [
   { id: 'industry', name: '行业', icon: 'fa-building-o' },
   { id: 'company', name: '企业', icon: 'fa-briefcase' },
   { id: 'software', name: '软件', icon: 'fa-desktop' },
-  { id: 'knowledge', name: '前沿知识', icon: 'fa-lightbulb-o' }
+  { id: 'knowledge', name: '知识', icon: 'fa-lightbulb-o' }
 ]
 
 const selectMobileTab = (tabId) => {

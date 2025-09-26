@@ -3,18 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #2563eb;
-  --secondary-color: #64748b;
-  --accent-color: #7c3aed;
-  --neutral-color: #f8fafc;
-  --primary-light: #eff6ff;
-  --accent-light: #f5f3ff;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
-  --danger-color: #ef4444;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  /* 温暖主色调：橙色系（替代原蓝色） */
+  --primary-color: #f97316; /* 主橙色 */
+  --primary-light: #fff7ed; /* 浅橙色背景 */
+  /* 辅助色：暖红/琥珀色 */
+  --accent-color: #ea580c; /* 强调色（暖红） */
+  --accent-light: #fff1f2; /* 浅强调色背景 */
+  /* 功能色调整为温暖风格 */
+  --success-color: #84cc16; /* 暖绿色 */
+  --warning-color: #fbbf24; /* 琥珀色 */
+  --danger-color: #ef4444; /* 暖红色 */
+  /* 中性色保持，但微调更柔和 */
+  --neutral-color: #fffbeb; /* 暖白色背景 */
+  --secondary-color: #94400c; /* 暖棕色文本 */
+  /* 阴影保持，确保层次感 */
+  --shadow-sm: 0 2px 8px rgba(249, 115, 22, 0.1);
+  --shadow-md: 0 4px 12px rgba(249, 115, 22, 0.15);
+  --shadow-lg: 0 8px 24px rgba(249, 115, 22, 0.2);
+  /* 圆角保持 */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
@@ -56,6 +62,20 @@
     content-visibility: auto;
   }
   
+  .warm-card {
+    @apply bg-white rounded-xl border border-amber-100 
+           shadow-sm hover:shadow-md hover:border-amber-200
+           transition-all duration-300 overflow-hidden;
+  }
+  .warm-section {
+    @apply bg-primary-light/50 rounded-2xl p-6 mb-8;
+  }
+  .warm-btn {
+    @apply bg-primary-color text-white px-5 py-2.5 rounded-lg 
+           hover:bg-primary-color/90 active:bg-primary-color/95
+           shadow-md hover:shadow-lg transition-all;
+  }
+
   .card-hover {
     @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
   }
