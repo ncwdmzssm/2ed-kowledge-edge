@@ -60,6 +60,28 @@
   </header>
 </template>
 
+<!-- 在 Header.vue 的 style 部分添加 -->
+<style scoped>
+/* 增强导航栏样式 */
+.header-actions {
+  @apply flex items-center gap-3;
+}
+
+/* 用户头像样式 */
+.user-avatar {
+  @apply w-8 h-8 rounded-full bg-primary-light flex items-center justify-center text-primary-color font-medium cursor-pointer hover:bg-primary-color/10 transition-colors;
+}
+
+/* 通知图标样式 */
+.notification-icon {
+  @apply text-gray-600 hover:text-primary-color transition-colors cursor-pointer relative;
+}
+
+.notification-badge {
+  @apply absolute -top-1 -right-1 w-4 h-4 bg-danger-color rounded-full text-white text-xs flex items-center justify-center;
+}
+</style>
+
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
@@ -97,3 +119,4 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
+

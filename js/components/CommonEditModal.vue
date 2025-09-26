@@ -70,3 +70,37 @@
     emit('close');
   };
   </script>
+
+  <!-- 在 CommonEditModal.vue 的 style 部分添加 -->
+<style scoped>
+/* 增强模态框动画 */
+.modal-backdrop {
+  @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 opacity-0 transition-opacity duration-300;
+  animation: fadeIn 0.3s forwards;
+}
+
+.modal-content {
+  @apply bg-white rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300;
+  animation: scaleIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* 表单分组间距 */
+.form-group {
+  @apply mb-5 last:mb-0;
+}
+
+/* 输入框焦点效果 */
+.input-focus {
+  @apply focus:ring-2 focus:ring-primary-color/30 focus:border-primary-color;
+}
+</style>

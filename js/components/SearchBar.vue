@@ -47,3 +47,30 @@ defineProps({
 
 defineEmits(['update:search', 'toggle-tag'])
 </script>
+
+<!-- 创建或修改 SearchBar.vue 的 style 部分 -->
+<style scoped>
+.search-container {
+  @apply relative mb-6;
+}
+
+.search-input {
+  @apply w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-color/50 focus:border-primary-color transition-all;
+}
+
+.search-icon {
+  @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400;
+}
+
+.tags-container {
+  @apply flex flex-wrap gap-2 mt-3;
+}
+
+.selected-tag {
+  @apply bg-primary-light text-primary-color px-3 py-1 rounded-full text-sm flex items-center gap-1.5;
+}
+
+.tag-remove {
+  @apply cursor-pointer hover:text-primary-color/80;
+}
+</style>

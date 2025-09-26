@@ -4,31 +4,33 @@
       :active-tab="activeTab"
       @change-tab="handleTabChange"
     />
-    
+  
+    <!-- 修改 App.vue 中的 main 部分 -->
     <main class="flex-grow container mx-auto px-4 py-6">
-      <SearchBar 
-        v-model:search="searchTerm"
-        :tags="availableTags"
-        :selected-tags="selectedTags"
-        @toggle-tag="toggleTag"
-      />
-      
-      <IndustryView 
-        v-if="activeTab === 'industry'"
-        :items="filteredItems"
-        @edit="handleIndustryEdit"
-        @add="handleIndustryAdd"
-      />
-      
-      <component 
-        v-else
-        :is="currentView"
-        :items="filteredItems"
-        @edit="openDetailModal"
-        @add="openAddModal"
-      />
+      <PageTransition>
+        <SearchBar 
+          v-model:search="searchTerm"
+          :tags="availableTags"
+          :selected-tags="selectedTags"
+          @toggle-tag="toggleTag"
+        />
+        
+        <IndustryView 
+          v-if="activeTab === 'industry'"
+          :items="filteredItems"
+          @edit="handleIndustryEdit"
+          @add="handleIndustryAdd"
+        />
+        
+        <component 
+          v-else
+          :is="currentView"
+          :items="filteredItems"
+          @edit="openDetailModal"
+          @add="openAddModal"
+        />
+      </PageTransition>
     </main>
-
     <Footer />
     
     <!-- 模态框组件 -->
