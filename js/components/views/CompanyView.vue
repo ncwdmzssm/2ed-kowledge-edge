@@ -2,6 +2,11 @@
     <div class="company-view">
       <!-- 公司基本信息区域 -->
       <div class="company-basic">
+        <div class="section-header">
+          <button class="back-btn" @click="$emit('back')">
+            <i class="fa fa-arrow-left mr-2"></i>返回列表
+          </button>
+        </div>
         <div class="company-header">
           <img :src="company.logo || placeholderLogo" alt="公司logo" class="company-logo" />
           <div class="company-title">
@@ -476,4 +481,21 @@
       grid-template-columns: 1fr;
     }
   }
+
+  .back-btn {
+  padding: 6px 12px;
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  display: inline-flex;
+  align-items: center;
+  }
+
+.back-btn:hover {
+  background-color: var(--primary-light);
+  }
+
   </style>
