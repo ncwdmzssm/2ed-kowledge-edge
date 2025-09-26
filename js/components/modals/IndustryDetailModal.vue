@@ -1,414 +1,370 @@
+<!-- 2ed-kowledge-edge/js/components/modals/IndustryDetailModal.vue -->
 <template>
-    <div class="modal-overlay" @click="$emit('close')">
-      <div class="modal-container" @click.stop>
-        <!-- 模态框头部 -->
-        <div class="modal-header">
-          <div class="header-left">
-            <div class="industry-badge" :style="{ backgroundColor: item.color || '#1890ff' }">
-              {{ item.category || '行业' }}
-            </div>
-            <h3 class="modal-title">{{ item.title }}</h3>
+  <div class="modal-overlay" @click="$emit('close')">
+    <div class="modal-container" @click.stop>
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <div class="header-left">
+          <div class="industry-badge" :style="{ backgroundColor: item.color || '#1890ff' }">
+            {{ item.category || '行业' }}
           </div>
-          <button 
-            class="close-button"
-            @click="$emit('close')"
-          >
+          <h3 class="modal-title">{{ item.title }}</h3>
+        </div>
+        <div class="header-actions">
+          <button class="edit-button" @click="toggleEditMode">
+            <i class="fa fa-edit mr-1"></i>{{ isEditing ? '保存' : '编辑' }}
+          </button>
+          <button class="delete-button" @click="handleDelete">
+            <i class="fa fa-trash mr-1"></i>删除
+          </button>
+          <button class="close-button" @click="$emit('close')">
             <i class="fa fa-times"></i>
           </button>
         </div>
-        
-        <!-- 内容区域 -->
-        <div class="modal-content">
-          <div v-if="isEditing">
+      </div>
+      
+      <!-- 内容区域 -->
+      <div class="modal-content">
+        <div v-if="isEditing">
+          <!-- 基本信息编辑 -->
+          <div class="edit-section">
+            <h4 class="edit-section-title">基本信息</h4>
+            <input 
+              v-model="editedItem.title" 
+              class="title-input" 
+              placeholder="行业名称"
+            >
+            <div class="edit-row">
+              <input 
+                v-model="editedItem.category" 
+                class="category-input" 
+                placeholder="行业类别"
+              >
+              <input 
+                v-model="editedItem.growthRate" 
+                class="growth-rate-input" 
+                placeholder="增长率(%)"
+                type="number"
+              >
+              <input 
+                v-model="editedItem.companiesCount" 
+                class="companies-count-input" 
+                placeholder="企业数量"
+                type="number"
+              >
+            </div>
+          </div>
+          
+          <!-- Markdown编辑区域 - 分块 -->
+          <div class="edit-section">
+            <h4 class="edit-section-title">行业简介</h4>
             <textarea
-              v-model="editedContent"
+              v-model="editedContent.overview"
               class="edit-input"
-              placeholder="支持 Markdown 格式，可输入行业分析详情..."
+              placeholder="请输入行业简介，支持Markdown格式..."
             ></textarea>
           </div>
-          <div v-else class="industry-detail">
-            <!-- 行业概览 -->
-            <div class="overview-section">
-              <h4 class="section-heading">行业概览</h4>
-              <div class="overview-stats">
-                <div class="stat-card">
-                  <p class="stat-label">市场规模</p>
-                  <p class="stat-value">{{ item.marketSize || '暂无数据' }}</p>
-                </div>
-                <div class="stat-card">
-                  <p class="stat-label">增长率</p>
-                  <p class="stat-value">{{ item.growthRate || '0' }}%</p>
-                </div>
-                <div class="stat-card">
-                  <p class="stat-label">企业数量</p>
-                  <p class="stat-value">{{ item.companiesCount || '0' }} 家</p>
-                </div>
-                <div class="stat-card">
-                  <p class="stat-label">产业链长度</p>
-                  <p class="stat-value">{{ item.chainLength || '未知' }}</p>
-                </div>
+          
+          <div class="edit-section">
+            <h4 class="edit-section-title">发展现状</h4>
+            <textarea
+              v-model="editedContent.currentSituation"
+              class="edit-input"
+              placeholder="请输入行业发展现状，支持Markdown格式..."
+            ></textarea>
+          </div>
+          
+          <div class="edit-section">
+            <h4 class="edit-section-title">龙头企业</h4>
+            <textarea
+              v-model="editedContent.leadingCompanies"
+              class="edit-input"
+              placeholder="请输入龙头企业信息，支持Markdown格式..."
+            ></textarea>
+          </div>
+          
+          <div class="edit-section">
+            <h4 class="edit-section-title">技术发展历史</h4>
+            <textarea
+              v-model="editedContent.techHistory"
+              class="edit-input"
+              placeholder="请输入技术发展历史，支持Markdown格式..."
+            ></textarea>
+          </div>
+          
+          <div class="edit-section">
+            <h4 class="edit-section-title">商业案例</h4>
+            <textarea
+              v-model="editedContent.businessCases"
+              class="edit-input"
+              placeholder="请输入商业案例，支持Markdown格式..."
+            ></textarea>
+          </div>
+        </div>
+        
+        <div v-else class="industry-detail">
+          <!-- 行业概览 -->
+          <div class="overview-section">
+            <h4 class="section-heading">行业概览</h4>
+            <div class="overview-stats">
+              <div class="stat-card">
+                <p class="stat-label">市场规模</p>
+                <p class="stat-value">{{ item.marketSize || '暂无数据' }}</p>
+              </div>
+              <div class="stat-card">
+                <p class="stat-label">增长率</p>
+                <p class="stat-value">{{ item.growthRate || '0' }}%</p>
+              </div>
+              <div class="stat-card">
+                <p class="stat-label">企业数量</p>
+                <p class="stat-value">{{ item.companiesCount || '0' }} 家</p>
+              </div>
+              <div class="stat-card">
+                <p class="stat-label">产业链长度</p>
+                <p class="stat-value">{{ item.chainLength || '未知' }}</p>
               </div>
             </div>
-            
-            <!-- 详细内容 -->
-            <div class="content-section">
-              <h4 class="section-heading">详细分析</h4>
+          </div>
+          
+          <!-- 详细内容 - 分块展示 -->
+          <div class="content-section">
+            <h4 class="section-heading">行业简介</h4>
+            <div class="markdown-body" v-html="renderedContent.overview"></div>
+          </div>
+          
+          <div class="content-section">
+            <h4 class="section-heading">发展现状</h4>
+            <div class="markdown-body" v-html="renderedContent.currentSituation"></div>
+          </div>
+          
+          <div class="content-section">
+            <h4 class="section-heading">龙头企业</h4>
+            <div class="markdown-body" v-html="renderedContent.leadingCompanies"></div>
+          </div>
+          
+          <div class="content-section">
+            <h4 class="section-heading">技术发展历史</h4>
+            <div class="markdown-body" v-html="renderedContent.techHistory"></div>
+          </div>
+          
+          <div class="content-section">
+            <h4 class="section-heading">商业案例</h4>
+            <div class="markdown-body" v-html="renderedContent.businessCases"></div>
+          </div>
+          
+          <!-- 相关企业 -->
+          <div class="related-section" v-if="item.relatedCompanies && item.relatedCompanies.length">
+            <h4 class="section-heading">相关企业</h4>
+            <div class="related-companies">
               <div 
-                class="markdown-body"
-                v-html="renderedContent"
-              ></div>
-            </div>
-            
-            <!-- 相关企业 -->
-            <div class="related-section" v-if="item.relatedCompanies && item.relatedCompanies.length">
-              <h4 class="section-heading">相关企业</h4>
-              <div class="related-companies">
-                <div 
-                  v-for="company in item.relatedCompanies" 
-                  :key="company.id"
-                  class="company-item"
-                >
-                  <img :src="company.logo" alt="Company logo" class="company-logo" />
-                  <div class="company-info">
-                    <p class="company-name">{{ company.name }}</p>
-                    <p class="company-role">{{ company.role }}</p>
-                  </div>
+                v-for="company in item.relatedCompanies" 
+                :key="company.id"
+                class="company-item"
+              >
+                <img :src="company.logo" alt="Company logo" class="company-logo" />
+                <div class="company-info">
+                  <p class="company-name">{{ company.name }}</p>
+                  <p class="company-role">{{ company.role }}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
-        <!-- 底部按钮 -->
-        <div class="modal-footer">
-          <button 
-            v-if="isEditing"
-            class="btn-secondary"
-            @click="cancelEdit"
-          >
-            取消
-          </button>
-          <button 
-            v-if="isEditing"
-            class="btn-primary"
-            @click="saveEdit"
-          >
-            保存
-          </button>
-          <button 
-            v-else
-            class="btn-primary"
-            @click="startEdit"
-          >
-            编辑分析
-          </button>
-        </div>
+      </div>
+      
+      <!-- 底部按钮 -->
+      <div class="modal-footer" v-if="isEditing">
+        <button class="btn-secondary" @click="cancelEdit">取消</button>
+        <button class="btn-primary" @click="saveEdit">保存更改</button>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, computed } from 'vue'
-  import { marked } from 'marked'
-  import hljs from 'highlight.js'
-  
-  // 配置marked
-  marked.setOptions({
-    highlight: (code, lang) => {
-      if (lang && hljs.getLanguage(lang)) {
-        return hljs.highlight(code, { language: lang }).value
-      }
-      return hljs.highlightAuto(code).value
-    },
-    breaks: true,
-    gfm: true
-  })
-  
-  const props = defineProps({
-    item: {
-      type: Object,
-      required: true
-    }
-  })
-  
-  const emit = defineEmits(['close', 'save'])
-  
-  const isEditing = ref(false)
-  const editedContent = ref('')
-  
-  const renderedContent = computed(() => {
-    return marked(props.item.content || '[暂无详细分析内容]')
-  })
-  
-  const startEdit = () => {
-    editedContent.value = props.item.content || ''
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, watch } from 'vue'
+import { marked } from 'marked'
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+    default: () => ({})
+  }
+})
+
+const emit = defineEmits(['close', 'save', 'delete'])
+
+// 编辑状态管理
+const isEditing = ref(false)
+const editedItem = ref({})
+const editedContent = ref({
+  overview: '',
+  currentSituation: '',
+  leadingCompanies: '',
+  techHistory: '',
+  businessCases: ''
+})
+
+// 初始化编辑数据
+watch(() => props.item, (newItem) => {
+  editedItem.value = { ...newItem }
+  editedContent.value = {
+    overview: newItem.content?.overview || '',
+    currentSituation: newItem.content?.currentSituation || '',
+    leadingCompanies: newItem.content?.leadingCompanies || '',
+    techHistory: newItem.content?.techHistory || '',
+    businessCases: newItem.content?.businessCases || ''
+  }
+}, { immediate: true })
+
+// 渲染Markdown内容
+const renderedContent = computed(() => ({
+  overview: marked(props.item.content?.overview || '[暂无行业简介]'),
+  currentSituation: marked(props.item.content?.currentSituation || '[暂无发展现状描述]'),
+  leadingCompanies: marked(props.item.content?.leadingCompanies || '[暂无龙头企业信息]'),
+  techHistory: marked(props.item.content?.techHistory || '[暂无技术发展历史]'),
+  businessCases: marked(props.item.content?.businessCases || '[暂无商业案例]')
+}))
+
+// 切换编辑模式
+const toggleEditMode = () => {
+  if (isEditing.value) {
+    saveEdit()
+  } else {
     isEditing.value = true
   }
-  
-  const cancelEdit = () => {
-    isEditing.value = false
+}
+
+// 取消编辑
+const cancelEdit = () => {
+  isEditing.value = false
+  // 重置编辑数据
+  editedItem.value = { ...props.item }
+  editedContent.value = {
+    overview: props.item.content?.overview || '',
+    currentSituation: props.item.content?.currentSituation || '',
+    leadingCompanies: props.item.content?.leadingCompanies || '',
+    techHistory: props.item.content?.techHistory || '',
+    businessCases: props.item.content?.businessCases || ''
   }
-  
-  const saveEdit = () => {
-    emit('save', {
-      ...props.item,
-      content: editedContent.value,
-      updatedAt: new Date().toISOString()
-    })
-    isEditing.value = false
+}
+
+// 保存编辑
+const saveEdit = () => {
+  emit('save', {
+    ...editedItem.value,
+    content: { ...editedContent.value },
+    updatedAt: new Date().toISOString()
+  })
+  isEditing.value = false
+}
+
+// 处理删除
+const handleDelete = () => {
+  if (confirm('确定要删除这个行业吗？此操作不可撤销。')) {
+    emit('delete', props.item.id)
+    emit('close')
   }
-  </script>
-  
-  <style scoped>
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
-  }
-  
-  .modal-container {
-    background-color: white;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 900px;
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  }
-  
-  /* 头部样式 */
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid #f3f4f6;
-  }
-  
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .industry-badge {
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 500;
-    color: white;
-  }
-  
-  .modal-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0;
-  }
-  
-  .close-button {
-    background: none;
-    border: none;
-    color: #6b7280;
-    font-size: 20px;
-    cursor: pointer;
-    transition: color 0.2s ease;
-  }
-  
-  .close-button:hover {
-    color: #1f2937;
-  }
-  
-  /* 内容区域 */
-  .modal-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px;
-  }
-  
-  .edit-input {
-    width: 100%;
-    height: 500px;
-    padding: 16px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 14px;
-    resize: none;
-  }
-  
-  .edit-input:focus {
-    outline: none;
-    border-color: #1890ff;
-    box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.1);
-  }
-  
-  /* 详情样式 */
-  .section-heading {
-    font-size: 16px;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0 0 16px 0;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #f3f4f6;
-  }
-  
-  .overview-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-  
-  .stat-card {
-    background-color: #f9fafb;
-    border-radius: 8px;
-    padding: 16px;
-    text-align: center;
-  }
-  
-  .stat-label {
-    font-size: 14px;
-    color: #6b7280;
-    margin: 0 0 8px 0;
-  }
-  
-  .stat-value {
-    font-size: 20px;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0;
-  }
-  
-  .content-section {
-    margin-bottom: 32px;
-  }
-  
-  .markdown-body {
-    font-size: 14px;
-    line-height: 1.8;
-    color: #374151;
-  }
-  
-  .markdown-body h1,
-  .markdown-body h2,
-  .markdown-body h3 {
-    margin-top: 24px;
-    margin-bottom: 16px;
-    color: #1f2937;
-  }
-  
-  .markdown-body p {
-    margin-bottom: 16px;
-  }
-  
-  .markdown-body ul,
-  .markdown-body ol {
-    margin-bottom: 16px;
-    padding-left: 24px;
-  }
-  
-  .markdown-body img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin: 16px 0;
-  }
-  
-  /* 相关企业 */
-  .related-companies {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  
-  .company-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background-color: #f9fafb;
-    border-radius: 8px;
-    padding: 12px 16px;
-    min-width: 250px;
-  }
-  
-  .company-logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
-    object-fit: contain;
-    background-color: white;
-    border: 1px solid #e5e7eb;
-  }
-  
-  .company-info .company-name {
-    font-weight: 500;
-    margin: 0 0 4px 0;
-  }
-  
-  .company-info .company-role {
-    font-size: 12px;
-    color: #6b7280;
-    margin: 0;
-  }
-  
-  /* 底部按钮 */
-  .modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    padding: 16px 24px;
-    border-top: 1px solid #f3f4f6;
-  }
-  
-  .btn-secondary {
-    padding: 8px 16px;
-    background-color: #f3f4f6;
-    color: #4b5563;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #e5e7eb;
-  }
-  
-  .btn-primary {
-    padding: 8px 16px;
-    background-color: #1890ff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .btn-primary:hover {
-    background-color: #096dd9;
-  }
-  
-  /* 响应式调整 */
-  @media (max-width: 768px) {
-    .overview-stats {
-      grid-template-columns: 1fr 1fr;
-    }
-    
-    .company-item {
-      width: 100%;
-    }
-  }
-  </style>
+}
+</script>
+
+<style scoped>
+/* 样式保持现有基础上，添加以下补充样式 */
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-button {
+  padding: 6px 12px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.delete-button {
+  padding: 6px 12px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.edit-section {
+  margin-bottom: 24px;
+}
+
+.edit-section-title {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+.title-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+.edit-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.category-input,
+.growth-rate-input,
+.companies-count-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.edit-input {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: monospace;
+  resize: vertical;
+}
+
+.content-section {
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.content-section:last-child {
+  border-bottom: none;
+}
+
+.btn-primary {
+  padding: 8px 16px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #096dd9;
+}
+</style>

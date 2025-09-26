@@ -47,6 +47,7 @@
       :item="currentIndustry"
       @close="showIndustryModal = false"
       @save="handleIndustrySave"
+      @delete="handleIndustryDelete"
     />
 
     <AddModal 
@@ -54,8 +55,14 @@
       :type="activeTab"
       @close="closeAddModal"
       @save="addNewItem"
+      ref="addModalRef" 
     />
     
+    <AddIndustryModal 
+      ref="industryAddModal"
+      @save="handleIndustryCreate"
+    />
+
     <Notification 
       :message="notification.message"
       :type="notification.type"
@@ -67,7 +74,7 @@
 
 
 <script setup>
-import { watch } from 'vue'
+import { watch, ref, onMounted   } from 'vue'
 import { useAppCore } from '../composables/useAppCore'
 import { useTabs } from '../composables/useTabs'
 import { useFiltering } from '../composables/useFiltering'
@@ -84,6 +91,9 @@ import IndustryView from './views/IndustryView.vue'
 import CompanyView from './views/CompanyView.vue'
 import SoftwareView from './views/SoftwareView.vue'
 import KnowledgeView from './views/KnowledgeView.vue'
+import AddIndustryModal from './modals/AddIndustryModal.vue'
+
+
 
 // 核心状态管理
 const {
@@ -103,6 +113,8 @@ const {
 // 标签页和视图管理
 const { activeTab, currentView, handleTabChange: originalHandleTabChange } = useTabs('industry')
 
+const industryAddModal = ref(null)
+
 // 搜索和过滤
 const {
   searchTerm,
@@ -115,14 +127,22 @@ const {
 } = useFiltering(data, activeTab)
 
 // 行业模块逻辑
+
 const {
   showIndustryModal,
   currentIndustry,
   handleIndustryEdit,
   handleIndustryAdd,
   handleIndustrySave,
+  handleIndustryDelete,
+  handleIndustryCreate,
+  setAddIndustryModalRef
 } = useIndustry(data, showNotification)
 
+// 关联弹窗引用
+onMounted(() => {
+  setAddIndustryModalRef(industryAddModal.value)
+})
 
 // 组合标签页切换逻辑
 const handleTabChange = (tab) => {

@@ -1,8 +1,15 @@
+// js/composables/useIndustry.js
 import { ref } from 'vue'
 
-export function useIndustry(data, showNotification) {
+// 确保使用正确的导出语法
+export const useIndustry = (data, showNotification) => {
   const showIndustryModal = ref(false)
   const currentIndustry = ref({})
+  const addIndustryModalRef = ref(null)
+
+  const setAddIndustryModalRef = (el) => {
+    addIndustryModalRef.value = el
+  }
 
   const handleIndustryEdit = (item) => {
     currentIndustry.value = JSON.parse(JSON.stringify(item))
@@ -10,11 +17,10 @@ export function useIndustry(data, showNotification) {
   }
 
   const handleIndustryAdd = () => {
-    // 可以在这里打开一个专用的“添加行业”模态框
-    // 为简化，我们暂时只记录一个log
-
-    console.log('Add new industry clicked')
-    showNotification('功能待开发: 添加新行业', 'info')
+    // 打开添加卡片弹窗
+    if (addIndustryModalRef.value) {
+      addIndustryModalRef.value.showModal()
+    }
   }
 
   const handleIndustrySave = (updatedItem) => {
@@ -26,11 +32,19 @@ export function useIndustry(data, showNotification) {
     showIndustryModal.value = false
   }
 
+  const handleIndustryCreate = (newIndustry) => {
+    // 添加新行业到数据列表
+    data.value.industries.push(newIndustry)
+    showNotification('新行业已添加', 'success')
+  }
+
   return {
     showIndustryModal,
     currentIndustry,
+    setAddIndustryModalRef,
     handleIndustryEdit,
     handleIndustryAdd,
     handleIndustrySave,
+    handleIndustryCreate
   }
 }

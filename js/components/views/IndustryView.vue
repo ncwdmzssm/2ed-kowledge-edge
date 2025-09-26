@@ -95,6 +95,9 @@ const formatDate = (dateString) => {
 }
 </script>
 
+
+
+
 <style scoped>
 .industry-view {
   max-width: 1200px;
