@@ -95,8 +95,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-
-import { useSoftwareStore } from '../../../store'  
+import { useSoftwareStore } from '../../store';
 import CommonEditModal from '../../components/CommonEditModal.vue';
 import SoftwareHeader from './software/SoftwareHeader.vue';
 import SoftwareInfo from './software/SoftwareInfo.vue';
