@@ -36,98 +36,13 @@ defineProps({
 </script>
 
 <style scoped>
-/* 通用区块样式 */
-.section-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.section-header h2 {
-  font-size: 18px;
-  margin: 0;
-}
-
-.add-btn,
-.edit-btn {
-  margin-left: auto;
-  padding: 4px 10px;
-  border: 1px dashed #1890ff;
-  border-radius: 4px;
-  background-color: transparent;
-  color: #1890ff;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.add-btn:hover,
-.edit-btn:hover {
-  background-color: #e6f7ff;
-}
-
-/* 主要功能列表 */
-.feature-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
 .feature-item {
-  display: flex;
-  align-items: flex-start;
-  border: 1px solid #eee;
-  border-radius: 6px;
-  padding: 15px;
-  background-color: #fff;
+  @apply warm-card p-5 flex items-start gap-4;
 }
-
 .feature-icon {
-  margin-right: 12px;
-  color: #1890ff;
-  font-size: 20px;
-  padding-top: 3px;
+  @apply text-primary-color text-xl pt-1;
 }
-
-.feature-info h3 {
-  font-size: 16px;
-  margin: 0 0 5px 0;
-}
-
-.feature-info p {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
-  line-height: 1.6;
-}
-
-/* 删除按钮 */
-.delete-feature-btn,
-.delete-scenario-btn,
-.delete-icon {
-  background: transparent;
-  border: none;
-  color: #f5222d;
-  cursor: pointer;
-  padding: 4px;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-.delete-feature-btn:hover,
-.delete-scenario-btn:hover,
-.delete-icon:hover {
-  opacity: 1;
-}
-
-/* 空状态提示 */
-.empty-placeholder {
-  padding: 30px 15px;
-  text-align: center;
-  border: 1px dashed #ddd;
-  border-radius: 6px;
-  color: #999;
-  font-size: 14px;
-  background-color: #fafafa;
+.add-btn {
+  @apply border-primary-color text-primary-color hover:bg-primary-light;
 }
 </style>

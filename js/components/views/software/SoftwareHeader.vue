@@ -33,91 +33,17 @@ const defaultLogo = 'https://picsum.photos/80/80?grayscale&blur=2';
 </script>
 
 <style scoped>
-/* 头部样式 */
 .software-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-  gap: 15px;
+  @apply bg-gradient-to-r from-primary-light to-accent-light/50 
+         p-6 rounded-xl mb-8 flex flex-wrap items-center gap-6;
 }
-
-.software-logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 4px;
-  object-fit: contain;
-  background-color: #f5f5f5;
-  border: 1px dashed #ddd;
-}
-
 .software-title h1 {
-  font-size: 28px;
-  margin: 0 0 5px 0;
+  @apply text-2xl font-bold text-accent-color;
 }
-
-.software-title p {
-  font-size: 16px;
-  color: #666;
-  margin: 0 0 10px 0;
-}
-
-.software-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
 .tag {
-  padding: 4px 10px;
-  background-color: #f0f7ff;
-  border-radius: 12px;
-  font-size: 13px;
-  color: #1890ff;
+  @apply bg-primary-light text-primary-color px-3 py-1 rounded-full text-sm;
 }
-
-.placeholder-tag {
-  padding: 4px 10px;
-  background-color: #fafafa;
-  border: 1px dashed #ddd;
-  border-radius: 12px;
-  font-size: 13px;
-  color: #999;
-}
-
-.software-actions {
-  margin-left: auto;
-  display: flex;
-  gap: 10px;
-}
-
-.edit-tag-btn,
 .edit-content-btn {
-  padding: 6px 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-.edit-tag-btn {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  color: #666;
-}
-
-.edit-tag-btn:hover {
-  border-color: #1890ff;
-  color: #1890ff;
-}
-
-.edit-content-btn {
-  background-color: #1890ff;
-  border: 1px solid #1890ff;
-  color: #fff;
-}
-
-.edit-content-btn:hover {
-  background-color: #096dd9;
+  @apply bg-primary-color text-white border-none hover:bg-accent-color;
 }
 </style>

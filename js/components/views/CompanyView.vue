@@ -1,7 +1,7 @@
 <template>
     <div class="company-view">
       <!-- 公司基本信息区域 -->
-      <div class="company-basic">
+      <div class="info-card company-basic">
         <div class="company-header">
           <img :src="company.logo || placeholderLogo" alt="公司logo" class="company-logo" />
           <div class="company-title">
@@ -13,14 +13,16 @@
             </div>
           </div>
           <div class="company-actions">
-            <button class="edit-tag-btn">编辑标签</button>
-            <button class="edit-content-btn">编辑内容</button>
+            <button class="action-btn"><i class="fas fa-tags"></i> 编辑标签</button>
+            <button class="action-btn primary"><i class="fas fa-edit"></i> 编辑内容</button>
           </div>
         </div>
   
         <div class="company-info">
-          <h2>迅速了解公司</h2>
-          <button class="edit-info-btn">编辑</button>
+          <div class="section-header">
+            <h2>迅速了解公司</h2>
+            <button class="action-btn"><i class="fas fa-pen"></i> 编辑</button>
+          </div>
           <p class="company-desc">
             {{ company.description || '[请输入公司简介，简要介绍公司的核心业务、定位和特点]' }}
           </p>
@@ -54,10 +56,10 @@
       </div>
   
       <!-- 主要行业区域 -->
-      <div class="company-industry">
+      <div class="info-card company-industry">
         <div class="section-header">
           <h2>主要行业</h2>
-          <button class="add-btn">+ 添加</button>
+          <button class="action-btn primary"><i class="fas fa-plus"></i> 添加</button>
         </div>
         <div class="industry-list">
           <div v-for="(industry, index) in company.industries" :key="index" class="industry-item">
@@ -79,10 +81,10 @@
       </div>
   
       <!-- 主要产品区域 -->
-      <div class="company-product">
+      <div class="info-card company-product">
         <div class="section-header">
           <h2>主要产品</h2>
-          <button class="add-btn">+ 添加</button>
+          <button class="action-btn primary"><i class="fas fa-plus"></i> 添加</button>
         </div>
         <div class="product-list">
           <div v-for="(product, index) in company.products" :key="index" class="product-item">
@@ -104,10 +106,10 @@
       </div>
   
       <!-- 企业历史大事件区域 -->
-      <div class="company-history">
+      <div class="info-card company-history">
         <div class="section-header">
           <h2>企业历史大事件</h2>
-          <button class="add-btn">+ 添加</button>
+          <button class="action-btn primary"><i class="fas fa-plus"></i> 添加</button>
         </div>
         <div class="history-list">
           <div v-for="(event, index) in company.historyEvents" :key="index" class="history-item">
@@ -157,39 +159,56 @@
   .company-view {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 24px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #333;
+    background-color: #f0f2f5;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .info-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s;
+  }
+
+  .info-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   }
   
   /* 头部样式 */
   .company-header {
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #f0f0f0;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 20px;
   }
   
   .company-logo {
     width: 80px;
     height: 80px;
-    border-radius: 4px;
+    border-radius: 8px;
     object-fit: contain;
     background-color: #f5f5f5;
-    border: 1px dashed #ddd;
+    border: 1px solid #eee;
   }
   
   .company-title h1 {
-    font-size: 28px;
-    margin: 0 0 5px 0;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
   }
   
   .company-title p {
-    font-size: 16px;
-    color: #666;
-    margin: 0 0 10px 0;
-    font-style: italic;
+    font-size: 15px;
+    color: #888;
+    margin: 0 0 12px 0;
   }
   
   .company-tags {
@@ -199,167 +218,153 @@
   }
   
   .tag {
-    padding: 4px 10px;
-    background-color: #f0f7ff;
-    border-radius: 12px;
-    font-size: 13px;
-    color: #1890ff;
+    padding: 3px 12px;
+    background-color: #e6f7ff;
+    border: 1px solid #91d5ff;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #096dd9;
+    font-weight: 500;
   }
   
   .placeholder-tag {
-    padding: 4px 10px;
+    padding: 3px 12px;
     background-color: #fafafa;
-    border: 1px dashed #ddd;
-    border-radius: 12px;
-    font-size: 13px;
+    border: 1px dashed #d9d9d9;
+    border-radius: 4px;
+    font-size: 12px;
     color: #999;
   }
   
   .company-actions {
     margin-left: auto;
     display: flex;
-    gap: 10px;
+    gap: 12px;
   }
   
-  .edit-tag-btn, .edit-content-btn {
+  .action-btn {
     padding: 6px 14px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
+    font-weight: 500;
     transition: all 0.2s;
-  }
-  
-  .edit-tag-btn {
     background-color: #fff;
-    border: 1px solid #ddd;
-    color: #666;
+    border: 1px solid #d9d9d9;
+    color: #555;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  
-  .edit-tag-btn:hover {
-    border-color: #1890ff;
-    color: #1890ff;
+
+  .action-btn:hover {
+    border-color: #40a9ff;
+    color: #40a9ff;
   }
-  
-  .edit-content-btn {
+
+  .action-btn.primary {
     background-color: #1890ff;
-    border: 1px solid #1890ff;
+    border-color: #1890ff;
     color: #fff;
   }
-  
-  .edit-content-btn:hover {
-    background-color: #096dd9;
+
+  .action-btn.primary:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
   }
   
   /* 基本信息区域 */
   .company-info {
-    background-color: #fafafa;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
+    padding-top: 24px;
   }
   
-  .company-info h2 {
-    font-size: 18px;
-    margin: 0 0 15px 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  .edit-info-btn {
-    float: right;
-    padding: 4px 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: pointer;
-    font-size: 13px;
-    color: #666;
+  .company-info .section-header {
+    margin-bottom: 16px;
   }
   
   .company-desc {
-    line-height: 1.7;
-    margin: 0 0 20px 0;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 4px;
+    line-height: 1.8;
+    margin: 0 0 24px 0;
+    padding: 12px 16px;
+    background-color: #fafafa;
+    border-radius: 6px;
     min-height: 60px;
+    color: #555;
+    border: 1px solid #f0f0f0;
   }
   
   .company-meta {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
   }
   
   .meta-item {
     display: flex;
-    flex-wrap: wrap;
-    padding: 8px 10px;
-    background-color: #fff;
-    border-radius: 4px;
+    align-items: center;
+    padding: 12px;
+    background-color: #fafafa;
+    border-radius: 6px;
+    border: 1px solid #f0f0f0;
   }
   
   .meta-label {
     font-weight: 500;
-    margin-right: 8px;
+    margin-right: 12px;
     color: #555;
-    min-width: 80px;
+    min-width: 70px;
+    flex-shrink: 0;
   }
   
   .meta-value {
     color: #333;
     flex: 1;
+    word-break: break-all;
   }
   
   /* 通用区块样式 */
   .section-header {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
   
   .section-header h2 {
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 600;
     margin: 0;
   }
   
-  .add-btn {
-    margin-left: auto;
-    padding: 4px 10px;
-    border: 1px dashed #1890ff;
-    border-radius: 4px;
-    background-color: transparent;
-    color: #1890ff;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .add-btn:hover {
-    background-color: #e6f7ff;
-  }
-  
-  /* 行业列表 */
+  /* 行业与产品列表 */
   .industry-list, .product-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 15px;
-    margin-bottom: 30px;
+    gap: 16px;
   }
   
   .industry-item, .product-item {
     display: flex;
     align-items: flex-start;
-    border: 1px solid #eee;
-    border-radius: 6px;
-    padding: 15px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 16px;
     background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .industry-item:hover, .product-item:hover {
+    border-color: #e6f7ff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   
   .industry-icon, .product-icon {
-    margin-right: 12px;
+    margin-right: 16px;
     color: #1890ff;
-    font-size: 20px;
-    padding-top: 3px;
+    font-size: 22px;
+    padding-top: 4px;
+    width: 24px;
+    text-align: center;
   }
   
   .industry-info, .product-info {
@@ -368,80 +373,82 @@
   
   .industry-info h3, .product-info h3 {
     font-size: 16px;
-    margin: 0 0 5px 0;
+    font-weight: 600;
+    margin: 0 0 6px 0;
   }
   
   .industry-info p, .product-info p {
     font-size: 14px;
     color: #666;
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.7;
   }
   
   /* 历史事件 */
-  .company-history {
-    margin-bottom: 30px;
-  }
-  
   .history-list {
     position: relative;
-    padding-left: 20px;
-  }
-  
-  .history-list::before {
-    content: '';
-    position: absolute;
-    left: 5px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background-color: #eee;
+    padding-left: 30px;
+    border-left: 2px solid #f0f0f0;
   }
   
   .history-item {
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 24px;
     padding-right: 20px;
+  }
+
+  .history-item:last-child {
+    margin-bottom: 0;
   }
   
   .event-dot {
-    width: 12px;
-    height: 12px;
-    background-color: #1890ff;
+    width: 14px;
+    height: 14px;
+    background-color: #fff;
+    border: 3px solid #1890ff;
     border-radius: 50%;
     position: absolute;
-    left: -24px;
+    left: -38px;
     top: 5px;
+    z-index: 1;
   }
   
   .event-content {
-    background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 6px;
-    padding: 15px;
+    background-color: #fafafa;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 16px;
   }
   
   .event-content h3 {
     font-size: 16px;
-    margin: 0 0 5px 0;
+    font-weight: 600;
+    margin: 0 0 8px 0;
   }
   
   .event-content p {
     font-size: 14px;
     color: #666;
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.7;
   }
   
   /* 删除按钮 */
   .delete-btn {
     background: transparent;
     border: none;
-    color: #f5222d;
+    color: #ff4d4f;
     cursor: pointer;
     padding: 4px;
-    opacity: 0.7;
+    opacity: 0; /* 默认隐藏 */
     transition: opacity 0.2s;
+    font-size: 16px;
+  }
+
+  .industry-item:hover .delete-btn,
+  .product-item:hover .delete-btn,
+  .history-item:hover .delete-btn {
+    opacity: 0.7;
   }
   
   .delete-btn:hover {
@@ -450,26 +457,35 @@
   
   /* 空状态提示 */
   .empty-placeholder {
-    padding: 30px 15px;
+    padding: 40px 20px;
     text-align: center;
-    border: 1px dashed #ddd;
-    border-radius: 6px;
+    border: 1px dashed #d9d9d9;
+    border-radius: 8px;
     color: #999;
     font-size: 14px;
     background-color: #fafafa;
+    grid-column: 1 / -1; /* 跨越所有列 */
   }
   
   /* 响应式调整 */
   @media (max-width: 768px) {
+    .company-view {
+      padding: 16px;
+      gap: 16px;
+    }
+    .info-card {
+      padding: 16px;
+    }
     .company-header {
       flex-direction: column;
       align-items: flex-start;
+      gap: 16px;
     }
     
     .company-actions {
       margin-left: 0;
       width: 100%;
-      justify-content: flex-end;
+      justify-content: flex-start;
     }
     
     .industry-list, .product-list, .company-meta {
