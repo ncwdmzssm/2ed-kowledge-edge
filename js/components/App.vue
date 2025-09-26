@@ -81,7 +81,7 @@ import AddModal from './modals/AddModal.vue'
 import IndustryDetailModal from './modals/IndustryDetailModal.vue'
 import Notification from './Notification.vue'
 import IndustryView from './views/IndustryView.vue'
-import CompanyView from './views/CompanyView.vue'
+import CompanyIndex from "@/views/company/CompanyIndex.vue";
 import SoftwareView from './views/SoftwareView.vue'
 import KnowledgeView from './views/KnowledgeView.vue'
 

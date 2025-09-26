@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import IndustryView from '../components/views/IndustryView.vue'
-import CompanyView from '../components/views/CompanyView.vue'
+import CompanyIndex from "@/views/company/CompanyIndex.vue";
 import SoftwareView from '../components/views/SoftwareView.vue'
 import KnowledgeView from '../components/views/KnowledgeView.vue'
 
