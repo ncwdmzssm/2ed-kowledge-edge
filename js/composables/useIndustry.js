@@ -38,6 +38,15 @@ export const useIndustry = (data, showNotification) => {
     showNotification('新行业已添加', 'success')
   }
 
+  const handleIndustryDelete = (id) => {
+    const index = data.value.industries.findIndex(item => item.id === id)
+    if (index !== -1) {
+      data.value.industries.splice(index, 1)
+      showNotification('行业已删除', 'success')
+    }
+    showIndustryModal.value = false
+  }
+
   return {
     showIndustryModal,
     currentIndustry,
@@ -45,6 +54,7 @@ export const useIndustry = (data, showNotification) => {
     handleIndustryEdit,
     handleIndustryAdd,
     handleIndustrySave,
-    handleIndustryCreate
+    handleIndustryCreate,
+    handleIndustryDelete
   }
 }

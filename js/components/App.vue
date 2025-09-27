@@ -134,14 +134,19 @@ const {
   handleIndustryEdit,
   handleIndustryAdd,
   handleIndustrySave,
-  handleIndustryDelete,
-  handleIndustryCreate,
-  setAddIndustryModalRef
+  handleIndustryDelete
+} = useIndustry(data, showNotification)
+
+// 在useIndustry调用中
+const {
+  // ...其他属性
+  addIndustryModal: setAddModalRef,
+  handleIndustryCreate
 } = useIndustry(data, showNotification)
 
 // 关联弹窗引用
 onMounted(() => {
-  setAddIndustryModalRef(industryAddModal.value)
+  setAddModalRef(industryAddModal.value)
 })
 
 // 组合标签页切换逻辑

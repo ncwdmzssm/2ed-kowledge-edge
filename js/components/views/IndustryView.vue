@@ -1,4 +1,3 @@
-
 <template>
   <div class="industry-view">
     <!-- 头部区域 -->
@@ -74,28 +73,10 @@
       </div>
     </div>
   </div>
-  <IndustryDetailCard 
-    :industry="selectedIndustry" 
-    @save="handleIndustrySave"
-  />
 </template>
 
 <script setup>
 import { format } from 'date-fns' // 需要安装date-fns: npm install date-fns
-import IndustryDetailCard from '../cards/IndustryDetailCard.vue';
-import { ref } from 'vue';
-
-// 选中的行业数据
-const selectedIndustry = ref({
-  // 行业数据结构
-});
-
-// 处理保存事件
-const handleIndustrySave = (updatedIndustry) => {
-  // 保存逻辑
-  console.log('保存行业数据:', updatedIndustry);
-  // 可以在这里调用API保存数据
-};
 
 defineProps({
   items: {
